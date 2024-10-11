@@ -21,7 +21,7 @@ class Solution(object):
 #         return max_sum
         
       
-        def maxSubArray(A, L, R):
+        def maxSub(A, L, R):
             if L == R:
                 return A[L]
             if L > R:
@@ -43,9 +43,9 @@ class Solution(object):
                 
             cross_sum =  left_sum + A[mid] + right_sum
             
-            return max(maxSubArray(A, L, mid-1), maxSubArray(A, mid+1, R), cross_sum)
+            return max(maxSub(A, L, mid-1), maxSub(A, mid+1, R), cross_sum)
         
-        return maxSubArray(nums, 0, len(nums)-1)
+        return maxSub(nums, 0, len(nums)-1)
             
             
             
