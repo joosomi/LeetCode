@@ -10,14 +10,43 @@ class Solution(object):
         # O(n)의 solution을 찾았다면,
         # divide and conquer approach solution 구현해보기
     
-        max_sum = nums[0]
-        current_sum = nums[0]
+#         max_sum = nums[0]
+#         current_sum = nums[0]
         
-        for i in range(1, len(nums)):
-            current_sum = max(nums[i], current_sum + nums[i])
+#         for i in range(1, len(nums)):
+#             current_sum = max(nums[i], current_sum + nums[i])
             
-            max_sum = max(max_sum, current_sum)
+#             max_sum = max(max_sum, current_sum)
             
-        return max_sum
+#         return max_sum
+        
+      
+        def maxSubArray(A, L, R):
+            if L == R:
+                return A[L]
+            if L > R:
+                return  -10**9
+            
+            mid, left_sum, right_sum, cur_sum = (L + R) // 2, 0, 0, 0
+            
+            #왼쪽에서 중간으로
+            for i in range(mid-1, L-1, -1):
+                cur_sum = cur_sum + A[i]
+                left_sum = max(left_sum, cur_sum)
+            
+            cur_sum =0
+            
+            #오른쪽에서 중간으로
+            for i in range(mid+1, R+1):
+                cur_sum = cur_sum + A[i]
+                right_sum = max(right_sum, cur_sum)
+                
+            cross_sum =  left_sum + A[mid] + right_sum
+            
+            return max(maxSubArray(A, L, mid-1), maxSubArray(A, mid+1, R), cross_sum)
+        
+        return maxSubArray(nums, 0, len(nums)-1)
+            
+            
             
             
