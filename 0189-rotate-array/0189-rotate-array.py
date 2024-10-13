@@ -8,10 +8,10 @@ class Solution(object):
     
         #rotate the array to the right by k steps
         
-        ans = nums[:]
+        ans = nums[:] # 복사해서 새로운 배열 생성 
         k = k % len(nums)
 
         for i, v in enumerate(nums):
             nums[(i + k) % len(nums)] = ans[i]
 
-        return ans
+        return nums
