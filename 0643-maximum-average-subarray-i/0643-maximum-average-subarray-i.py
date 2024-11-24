@@ -18,7 +18,8 @@ class Solution(object):
         # return float(max_sum) / k
 
         # 1-2.
- 
+        if len(nums) ==1 :
+            return float(nums[0])
 
         start, end = 0, k
         average = 0.0
