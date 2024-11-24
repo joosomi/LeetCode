@@ -18,23 +18,36 @@ class Solution(object):
         # return float(max_sum) / k
 
         # 1-2.
-        if len(nums) ==1 :
-            return float(nums[0])
+        # if len(nums) ==1 :
+        #     return float(nums[0])
 
-        start, end = 0, k
-        average = 0.0
+        # start, end = 0, k
+        # average = 0.0
 
-        for i in range(k):
-            average += float(nums[i]) / k
+        # for i in range(k):
+        #     average += float(nums[i]) / k
         
-        max_average = average 
+        # max_average = average 
 
-        while end < len(nums):
-            average = average - float(nums[start]) / k
-            average = average + float(nums[end]) / k
-            max_average = max(max_average, average)
+        # while end < len(nums):
+        #     average = average - float(nums[start]) / k
+        #     average = average + float(nums[end]) / k
+        #     max_average = max(max_average, average)
 
-            start += 1
-            end +=1 
+        #     start += 1
+        #     end +=1 
 
-        return max_average 
+        # return max_average 
+
+        # 2. 
+        cur = 0
+        for i in range(k):
+            cur += nums[i]
+        
+        max_sum = cur
+        for i in range(k, len(nums)):
+            cur += nums[i] - nums[i-k]
+            if cur > max_sum:
+                max_sum = cur
+        
+        return float(max_sum) / k
