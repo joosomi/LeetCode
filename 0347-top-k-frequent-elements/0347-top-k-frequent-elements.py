@@ -5,14 +5,22 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        
-        nums = sorted(nums, key=lambda x: nums.count(x), reverse = True)
-        
-        ans = []
-        for i in range(len(nums)):
-            if nums[i] not in ans:
-                ans.append(nums[i])
- 
-        
-        return ans[:k]
 
+        #bucket sort 
+
+        cnt = Counter(nums)
+        print(cnt.items())
+
+        buckets = [[] for _ in range(len(nums) + 1)]
+
+        for val, freq in cnt.items():
+            buckets[freq].append(val)
+
+        ans = []
+        
+        for bucket in reversed(buckets):
+            for val in bucket:
+                ans.append(val)
+                k -= 1
+                if k == 0:
+                    return ans
