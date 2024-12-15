@@ -5,10 +5,7 @@ class Solution(object):
         :rtype: bool
         """
        
-        cnt = Counter(nums)
-
-        for val, freq in cnt.items():
-            if freq >= 2:
-                return True
-
-        return False 
+        if len(nums) != len(set(nums)):
+            return True
+        else: 
+            return False
