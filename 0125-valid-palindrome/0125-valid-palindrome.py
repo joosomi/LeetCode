@@ -8,11 +8,17 @@ class Solution(object):
 
         alphanumeric = "abcdefghijklmnopqrstuvxyz0123456789"
         
-        fil = [i for i in lower(s) if i in alphanumeric]
-        print(fil)
-        
-        for i in range(len(fil)):
-            if fil[i] != fil[len(fil)-i-1]:
+        filtered = [i for i in lower(s) if i in alphanumeric]
+
+        left, right = 0, len(filtered)-1
+
+        while left < right:
+            if filtered[left] == filtered[right]:
+                pass
+            
+            else:
                 return False
+            left += 1
+            right -= 1
 
         return True
