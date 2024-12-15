@@ -6,9 +6,9 @@ class Solution(object):
         """
         # Palindrome -> 양끝을 하나씩 비교
 
-        alphanumeric = "abcdefghijklmnopqrstuvxyz0123456789"
+        # alphanumeric = "abcdefghijklmnopqrstuvxyz0123456789"
         
-        filtered = [i for i in lower(s) if i in alphanumeric]
+        filtered = [i for i in lower(s) if i.isalnum()]
 
         left, right = 0, len(filtered)-1
 
