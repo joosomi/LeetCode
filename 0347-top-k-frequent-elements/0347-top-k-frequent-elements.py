@@ -1,3 +1,5 @@
+import heapq
+
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
@@ -6,21 +8,18 @@ class Solution(object):
         :rtype: List[int]
         """
 
-        #bucket sort 
-
         cnt = Counter(nums)
+
+        heap = []
         print(cnt.items())
 
-        buckets = [[] for _ in range(len(nums) + 1)]
-
         for val, freq in cnt.items():
-            buckets[freq].append(val)
+            if len(heap) < k:
+                heapq.heappush(heap, (freq, val))
+            
+            elif freq > heap[0][0]:
+                heapq.heappop(heap)
+                heapq.heappush(heap, (freq, val))
 
-        ans = []
-        
-        for bucket in reversed(buckets):
-            for val in bucket:
-                ans.append(val)
-                k -= 1
-                if k == 0:
-                    return ans
+        print(heap)
+        return [ val for freq, val in heap ]
