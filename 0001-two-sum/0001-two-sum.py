@@ -6,13 +6,11 @@ class Solution(object):
         :rtype: List[int]
         """
         
-        dict = {}
+        ans = []
+        for idx, val in enumerate(nums):
+            remain = target - val
 
-        for i, v in enumerate(nums):
-            ans = target - v 
-
-            if ans in dict:
-                return [dict[ans], i]
-            dict[v] = i
-
-        return []
+            if remain in nums and nums.index(remain) != idx:
+                ans.append(nums.index(remain))
+                ans.append(idx)
+                return ans
