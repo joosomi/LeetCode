@@ -1,3 +1,5 @@
+import heapq
+
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
@@ -5,10 +7,15 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-
         cnt = Counter(nums)
-        cnt = sorted(cnt, key=lambda x: cnt[x], reverse = True)
-      
-        return cnt[:k]
+        sorted_cnt = sorted(cnt.keys(), key=lambda x: cnt[x], reverse= True)
 
+        heap = []
+        for i in range(len(sorted_cnt)):
+            heapq.heappush(heap, sorted_cnt[i])
+            if len(heap) == k:
+                return heap        
+
+
+        
 
