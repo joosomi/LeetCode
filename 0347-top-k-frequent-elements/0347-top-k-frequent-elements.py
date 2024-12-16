@@ -1,5 +1,3 @@
-import heapq
-
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
@@ -9,17 +7,8 @@ class Solution(object):
         """
 
         cnt = Counter(nums)
+        cnt = sorted(cnt, key=lambda x: cnt[x], reverse = True)
+      
+        return cnt[:k]
 
-        heap = []
-        print(cnt.items())
 
-        for val, freq in cnt.items():
-            if len(heap) < k:
-                heapq.heappush(heap, (freq, val))
-            
-            elif freq > heap[0][0]:
-                heapq.heappop(heap)
-                heapq.heappush(heap, (freq, val))
-
-        print(heap)
-        return [ val for freq, val in heap ]
