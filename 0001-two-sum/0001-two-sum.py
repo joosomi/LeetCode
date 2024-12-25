@@ -5,14 +5,15 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        ans = []
+       
+       # 시간을 줄이기 위해 -> 해쉬맵(딕셔너리)를 사용한다! 
+        ans = {}
+
         for idx, val in enumerate(nums):
-            if target - val in nums[idx+1:]:
-                ans.append(idx)
-                ans.append(nums[idx+1:].index(target-val)+idx + 1 )
-                return ans
-
-            else:
-                pass
-
-        
+            remained_value = target - val
+            if remained_value in ans:
+                return [ans[remained_value], idx]
+            
+            ans[val] = idx
+            
+            
