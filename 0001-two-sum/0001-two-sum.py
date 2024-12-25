@@ -5,11 +5,14 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        
-        ans = {}
+        ans = []
         for idx, val in enumerate(nums):
-            remain = target - val
+            if target - val in nums[idx+1:]:
+                ans.append(idx)
+                ans.append(nums[idx+1:].index(target-val)+idx + 1 )
+                return ans
 
-            if remain in ans:
-                return [ans[remain], idx]
-            ans[val] = idx
+            else:
+                pass
+
+        
