@@ -4,28 +4,38 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        nums.sort()
+        
         ans = []
-        for i in range(len(nums)):
-            if i > 0 and nums[i] == nums[i-1]:  # 중복값 건너뛰기
-                continue
+        
+        nums.sort()
+        print(nums)
 
-            num = nums[i]
-            left, right = i+1, len(nums)-1
+        for idx, val in enumerate(nums):
 
-            while left < right: 
-                total = num + nums[left] + nums[right]
-                if total ==0 :
-                    triplets = [nums[i], nums[left], nums[right]]
-                    if triplets not in ans:
-                        ans.append(triplets)
+            if idx>0 and nums[idx]==nums[idx-1]:
+                continue 
 
-                    left += 1
+            remained = -val
+            
+            left, right = idx+1, len(nums)-1
+
+            while left < right:
+                
+                if nums[left]+nums[right] ==remained:
+                    ans.append([nums[left], nums[right], val])
+
+                    while left <right and nums[left] == nums[left+1]:
+                        left+=1 
+                    while left < right and nums[right]==nums[right-1]:
+                        right-=1 
+                    left +=1 
                     right -=1
 
-                elif total < 0:
+                elif nums[left]+nums[right]< remained:
                     left +=1 
-                elif total > 0:
-                    right -= 1 
+                elif nums[left]+nums[right]>remained:
+                    right-=1
 
         return ans
+
+    
