@@ -6,24 +6,22 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         
-        current = []
-        result = []
+        ans = []
+        def dfs (i, current, current_sum):
+            if current_sum == target:
+                ans.append(list(current))
+                return 
 
-        def dfs(i, candidates_sum):
+            elif current_sum > target:
+                return
 
-            if candidates_sum == target :
-                result.append(list(current))
-            
-            elif candidates_sum < target :
+            elif current_sum < target:
                 for j in range(i, len(candidates)):
                     current.append(candidates[j])
-                    dfs(j, candidates_sum + candidates[j])
+                    dfs(j, current, current_sum + candidates[j])
                     current.pop()
+
         
-
-        dfs(0,0)
-        return result
-
-
-
- 
+        dfs(0, [], 0)
+        return ans
+            
