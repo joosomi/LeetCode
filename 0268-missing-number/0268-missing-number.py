@@ -5,9 +5,7 @@ class Solution(object):
         :rtype: int
         """
         
-        n = len(set(nums))
-        print(n)
+        n = len(nums)
+        total_sum = n*(n+1)//2
 
-        for i in range(0, n+1) :
-            if i not in nums:
-                return i
+        return total_sum - sum(nums)
