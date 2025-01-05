@@ -6,18 +6,16 @@ class Solution(object):
         """
         ans = 0
 
-        for i in range(len(s)):
-            left = right = i
+        def countPalindrome(left, right):
+            result = 0
             while left >=0 and right < len(s) and s[left] == s[right]:
-                ans += 1 
+                result += 1 
                 left -=1
-                right +=1 
-            
-            left, right = i, i+1
-            while  left >=0 and right <len(s) and s[left] == s[right]:
-                ans +=1 
-                left -=1
-                right +=1 
+                right +=1
+            return result 
 
+        for i in range(len(s)):
+            ans += countPalindrome(i, i)
+            ans += countPalindrome(i, i+1)
 
         return ans 
