@@ -5,21 +5,20 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        
         ans = []
 
-        def backtracking(idx, path, target):
-            if target <0 or idx >= len(candidates):
+        def dfs(i, current, total):
+            if total == target:
+                ans.append(list(current))
                 return 
-                
-            if target ==  0:
-                ans.append(list(path))
+            
+            if total > target or i >= len(candidates):
                 return
 
-            path.append(candidates[idx])
-            backtracking(idx, path, target - candidates[idx])
-            path.pop()
-            backtracking(idx+1, path, target)
+            current.append(candidates[i])
+            dfs(i, current, total + candidates[i])
+            current.pop()
+            dfs(i+1, current, total)
 
-        backtracking(0, [] ,target)
+        dfs(0, [], 0)
         return ans
