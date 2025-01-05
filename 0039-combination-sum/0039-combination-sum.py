@@ -7,21 +7,19 @@ class Solution(object):
         """
         
         ans = []
-        def dfs (i, current, current_sum):
-            if current_sum == target:
-                ans.append(list(current))
-                return 
 
-            elif current_sum > target:
+        def backtracking(idx, path, target):
+            if target <0 or idx >= len(candidates):
+                return 
+                
+            if target ==  0:
+                ans.append(list(path))
                 return
 
-            elif current_sum < target:
-                for j in range(i, len(candidates)):
-                    current.append(candidates[j])
-                    dfs(j, current, current_sum + candidates[j])
-                    current.pop()
+            path.append(candidates[idx])
+            backtracking(idx, path, target - candidates[idx])
+            path.pop()
+            backtracking(idx+1, path, target)
 
-        
-        dfs(0, [], 0)
+        backtracking(0, [] ,target)
         return ans
-            
