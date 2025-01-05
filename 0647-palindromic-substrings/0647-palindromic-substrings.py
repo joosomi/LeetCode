@@ -4,19 +4,20 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        
         ans = 0
-        n = len(s)
 
-        def countFromCenter(left, right):
-            count = 0
-            while left >= 0 and right < n and s[left] == s[right]:
-                count +=1
-                left -=1 
+        for i in range(len(s)):
+            left = right = i
+            while left >=0 and right < len(s) and s[left] == s[right]:
+                ans += 1 
+                left -=1
                 right +=1 
-            return count
-        
-        for i in range(n):
-            ans += countFromCenter(i, i)
-            ans += countFromCenter(i, i+1)
-        return ans
+            
+            left, right = i, i+1
+            while  left >=0 and right <len(s) and s[left] == s[right]:
+                ans +=1 
+                left -=1
+                right +=1 
+
+
+        return ans 
