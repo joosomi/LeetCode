@@ -18,10 +18,11 @@ class Solution(object):
         ans = [1]*len(nums)
         for k in range(len(nums)):
             if k == 0:
-                ans[k] = postfix[0]
+                ans[k] = postfix[1]
             elif k == len(nums)-1:
                 ans[k] = prefix[k-1]
             else:
                 ans[k] = prefix[k-1] * postfix[k+1]
+        
         return ans
         
