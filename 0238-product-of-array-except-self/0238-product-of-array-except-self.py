@@ -7,16 +7,15 @@ class Solution(object):
         output = [1]*len(nums)
 
         Pre = 1
-        output[0] = 1
-        for i in range(1, len(nums)):
-            output[i] = Pre * nums[i-1]
-            Pre*= nums[i-1]
+        for i in range(len(nums)):
+            output[i] = Pre 
+            Pre *= nums[i]
         
         print(output)
 
         Post = 1 
         for i in range(len(nums)-1, -1, -1):
-            output[i] = Post * output[i]
+            output[i] *= Post
             Post *= nums[i]
 
         
