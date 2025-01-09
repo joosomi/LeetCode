@@ -1,24 +1,18 @@
-class Solution(object):
-    def combinationSum(self, candidates, target):
-        """
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
-        """
-        ans = []
-
-        def dfs(i, current, total):
-            if total == target:
-                ans.append(current[:]) #복사본 저장 
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        def dfs(index, path, curSum):
+            if curSum == target:
+                res.append(path.copy())
                 return 
-            
-            if total > target or i >= len(candidates):
-                return
+            elif curSum > target:
+                return 
 
-            current.append(candidates[i])
-            dfs(i, current, total + candidates[i])
-            current.pop()
-            dfs(i+1, current, total)
+            for i in range(index, len(candidates)):
+                path.append(candidates[i])
+                dfs(i, path, curSum + candidates[i])
+                path.pop()
 
         dfs(0, [], 0)
-        return ans
+        
+        return res
