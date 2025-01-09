@@ -1,38 +1,30 @@
-class Solution(object):
-    def exist(self, board, word):
-        """
-        :type board: List[List[str]]
-        :type word: str
-        :rtype: bool
-        """
-        
-        ROWS, COLS = len(board), len(board[0])
-        path = set()
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        c = len(board[0])
+        r = len(board)
+        visited = [[False]* c for _ in range(r)]
 
-        def dfs(r, c, idx):
-            if len(path) == len(word):
+        def dfs(idx, x, y, path):
+            if  idx == len(word):
                 return True
-            if r < 0 or c < 0 or r >= ROWS or c >= COLS:
-                return False
-            if (r, c) in path:
-                return False
-            if word[idx] != board[r][c]:
-                return False
+            elif x <0 or y <0 or x>= r or y>= c:
+                return 
+            elif visited[x][y] or board[x][y] != word[idx]:
+                return 
 
-            path.add((r,c))
+            visited[x][y] = True
+            path.append(board[x][y])
             
-            if dfs(r+1, c, idx+1) or dfs(r-1, c, idx+1) or dfs(r, c+1, idx+1) or  dfs(r, c-1, idx+1):
-                return True
-            
-            path.remove((r,c))
-            return False
-            
-     
-            
-
-        for r in range(ROWS):
-            for c in range(COLS):
-                if dfs(r, c, 0):
+            if  dfs(idx+1, x+1, y, path) or \
+                dfs(idx+1, x, y+1, path) or \
+                dfs(idx+1, x-1, y, path) or \
+                dfs(idx+1, x, y-1, path):
                     return True
-            
+
+            path.pop()
+   
+        for i in range(r):
+            for j in range(c):
+                if dfs(0, i, j, []):
+                    return True
         return False
