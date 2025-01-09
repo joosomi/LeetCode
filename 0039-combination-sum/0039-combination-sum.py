@@ -9,7 +9,7 @@ class Solution(object):
 
         def dfs(i, current, total):
             if total == target:
-                ans.append(list(current))
+                ans.append(current[:]) #복사본 저장 
                 return 
             
             if total > target or i >= len(candidates):
