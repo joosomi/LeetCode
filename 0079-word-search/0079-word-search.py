@@ -22,6 +22,7 @@ class Solution:
                     return True
 
             path.pop()
+            visited[x][y] = False
    
         for i in range(r):
             for j in range(c):
