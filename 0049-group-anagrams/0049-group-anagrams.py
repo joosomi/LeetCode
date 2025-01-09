@@ -5,19 +5,15 @@ class Solution(object):
         :rtype: List[List[str]]
         """
         
-        sorted_val = {}
 
-        for idx, val in enumerate(strs):
-            print(sorted(list(val)))
+        ans = defaultdict(list)
 
-            if "".join(sorted(list(val))) in sorted_val:
-                sorted_val["".join(sorted(list(val)))].append(val)
-            else:
-                sorted_val["".join(sorted(list(val)))] = [val]
+        for s in strs:
+            count = [0]*26
 
-        
-        return sorted_val.values()
-
+            for c in s:
+                count[ord(c) - ord("a")] += 1
             
-
-  
+            ans[tuple(count)].append(s)
+        
+        return ans.values()
