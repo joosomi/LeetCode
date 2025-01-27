@@ -1,27 +1,25 @@
-class Solution:
-    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        
-        visited = [False]* (len(s))
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = [-1] * (len(s)+1)
+        dp[0] = True
+
         def dfs(idx):
-            if idx == len(s):
-                return True 
+            if len(s) == idx:
+                return True
             
-            if visited[idx]:
-                return False
-            
-            visited[idx] = True
-            for word in wordDict:
-                if s[idx:].startswith(word):
-                    if dfs(idx+len(word)):
-                        return True
+            if dp[idx] != -1:
+                return dp[idx]
 
-            return False
-                    
-        return dfs(0)
+            for char in wordDict:
+                if s[idx:idx+len(char)]== char:
+                    if dfs(idx + len(char)):
+                        dp[idx + len(char)] = True
 
+            dp[idx] = False
 
-            
-               
-                    
-
-        
+        return dp[len(s)]
