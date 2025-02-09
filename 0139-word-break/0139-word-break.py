@@ -5,21 +5,25 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        dp = [-1] * (len(s)+1)
-        dp[0] = True
+        
+        ## dp => s의 인덱스 i부터 끝까지 단어 분해가 가능한가?
+        
+        dp = [None] * (len(s))
 
         def dfs(idx):
-            if len(s) == idx:
+            if idx == len(s):  
                 return True
-            
-            if dp[idx] != -1:
+            if dp[idx] is not None:
                 return dp[idx]
+            
+            for i in range(idx+1, len(s)+1):
+                if s[idx:i] in wordDict:
+                    if dfs(i) is True:
+                        return True
+            dp[idx]= False
+            return False
+        
+        return dfs(0)
 
-            for char in wordDict:
-                if s[idx:idx+len(char)]== char:
-                    if dfs(idx + len(char)):
-                        dp[idx + len(char)] = True
+        
 
-            dp[idx] = False
-
-        return dp[len(s)]
