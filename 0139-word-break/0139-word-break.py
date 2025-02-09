@@ -17,7 +17,7 @@ class Solution(object):
                 return dp[idx]
             
             for i in range(idx+1, len(s)+1):
-                if s[idx:i] in set(wordDict):
+                if s[idx:i] in wordDict:
                     if dfs(i) is True:
                         dp[idx] = True
                         return True
