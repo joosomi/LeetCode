@@ -18,6 +18,7 @@ class Solution(object):
             
             for i in range(idx+1, len(s)+1):
                 if s[idx:i] in wordDict:
+                    dp[idx] = True
                     if dfs(i) is True:
                         return True
             dp[idx]= False
