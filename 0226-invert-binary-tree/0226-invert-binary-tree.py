@@ -15,15 +15,11 @@ class Solution:
         queue = deque()
         queue.append(root)
 
-        while queue:
-            node = queue.popleft()
-            node.right, node.left = node.left, node.right
+      
+        root.right, root.left = root.left, root.right
 
-            if node.right:
-                queue.append(node.right)
-            if node.left:
-                queue.append(node.left)
-
+        self.invertTree(root.left)
+        self.invertTree(root.right)
 
         return root
           
