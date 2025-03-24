@@ -12,10 +12,10 @@ class Solution:
         merged = []
 
         current = meetings[0]   
-        for i in range(1, len(meetings)):
+        for i in range(len(meetings)):
             next_meeting = meetings[i] 
 
-            # 현재 회의 시작 & 이전 회의의 끝 겹치는지 확인 
+            # 현재 회의 끝 &  다음 회의 시작 겹치는지 확인 
             if current[1] >= next_meeting[0]:
                 current = [current[0], max(current[1], next_meeting[1])]             
              
