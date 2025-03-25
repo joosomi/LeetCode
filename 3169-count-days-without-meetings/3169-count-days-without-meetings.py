@@ -7,12 +7,13 @@ class Solution:
         # 1. 겹치는 회의 병합 - 새로운 회의 시간표 -> 정렬
         # 2. 종료/시작 시간의 차이 계산, 합산
 
-        meetings.sort(key=lambda x: x[0])
+        # meetings.sort(key=lambda x: x[0])
+        meetings.sort()
         print(meetings)
         merged = []
 
         current = meetings[0]   
-        for i in range(len(meetings)):
+        for i in range(1, len(meetings)):
             next_meeting = meetings[i] 
 
             # 현재 회의 끝 &  다음 회의 시작 겹치는지 확인 
@@ -23,6 +24,7 @@ class Solution:
                 if current not in merged:
                     merged.append(current)
                     current = next_meeting
+        
         merged.append(current)
             
 
