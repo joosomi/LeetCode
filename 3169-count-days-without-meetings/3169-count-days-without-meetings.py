@@ -8,9 +8,9 @@ class Solution:
         # 2. 종료/시작 시간의 차이 계산, 합산
 
         # meetings.sort(key=lambda x: x[0])
+
         meetings.sort()
-        print(meetings)
-        merged = []
+        merged_meetings = []
 
         current = meetings[0]   
         for i in range(1, len(meetings)):
@@ -21,20 +21,17 @@ class Solution:
                 current = [current[0], max(current[1], next_meeting[1])]             
              
             else:
-                if current not in merged:
-                    merged.append(current)
-                    current = next_meeting
+                merged_meetings.append(current)
+                current = next_meeting
         
-        merged.append(current)
+        merged_meetings.append(current)
             
 
-        print(merged)
-
-        scheduled = 0
+        scheduled_days = 0
     
-        for start, end in merged:
-            scheduled += (end - start + 1)
+        for start, end in merged_meetings:
+            scheduled_days += (end - start + 1)
 
-        return days - scheduled
+        return days - scheduled_days
         
         
