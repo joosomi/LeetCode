@@ -10,21 +10,21 @@ class Solution:
         # meetings.sort(key=lambda x: x[0])
 
         meetings.sort()
-        merged_meetings = set()
+        merged_meetings = []
 
-        current = tuple(meetings[0])
+        current_start, current_end = meetings[0]   
         for i in range(1, len(meetings)):
-            next_meeting = tuple(meetings[i])
+            next_start, next_end = meetings[i] 
 
             # 현재 회의 끝 &  다음 회의 시작 겹치는지 확인 
-            if current[1] >= next_meeting[0]:
-                current = (current[0], max(current[1], next_meeting[1]))        
+            if current_end >= next_start:
+                current_end = max(current_end, next_end)       
              
             else:
-                merged_meetings.add(current)
-                current = next_meeting
+                merged_meetings.append([current_start, current_end])
+                current_start, current_end = next_start, next_end
         
-        merged_meetings.add(current)
+        merged_meetings.append([current_start, current_end])
             
 
         scheduled_days = 0
