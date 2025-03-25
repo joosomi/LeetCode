@@ -10,9 +10,9 @@ class Solution:
         # meetings.sort(key=lambda x: x[0])
 
         meetings.sort()
-        merged_meetings = []
+        scheduled_days = 0
+        current_start, current_end = meetings[0]  
 
-        current_start, current_end = meetings[0]   
         for i in range(1, len(meetings)):
             next_start, next_end = meetings[i] 
 
@@ -21,16 +21,10 @@ class Solution:
                 current_end = max(current_end, next_end)       
              
             else:
-                merged_meetings.append([current_start, current_end])
+                scheduled_days += (current_end - current_start + 1)
                 current_start, current_end = next_start, next_end
         
-        merged_meetings.append([current_start, current_end])
-            
-
-        scheduled_days = 0
-    
-        for start, end in merged_meetings:
-            scheduled_days += (end - start + 1)
+        scheduled_days += (current_end - current_start + 1)
 
         return days - scheduled_days
         
