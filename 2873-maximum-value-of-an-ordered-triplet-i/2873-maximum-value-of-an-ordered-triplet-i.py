@@ -16,14 +16,13 @@ class Solution:
 
         # return max_value
 
-        max_value = 0
-        max_i_value = nums[0]
-        for j in range(1, len(nums)):
-            max_i_value = max(max_i_value, nums[j-1])
-            i =  nums.index(max_i_value)
-            for k in range(j+1, len(nums)):
-                max_value = max(max_value, (nums[i]- nums[j])*nums[k])
+
+        max_value, max_i_val, max_sub = 0, 0, 0
+
+        for i in nums:           
+            max_value = max(max_sub * i, max_value)
+            max_i_val = max(i, max_i_val)
+            max_sub = max(max_i_val - i, max_sub)
+            
 
         return max_value
-            
-                    
