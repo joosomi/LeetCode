@@ -6,7 +6,7 @@ class Solution:
 
         cnt = 0
 
-        while len(set(nums)) != len(nums):
+        while len(set(nums)) < len(nums):
             if len(nums) >= 3:
                 nums = nums[3:]
             else: 
