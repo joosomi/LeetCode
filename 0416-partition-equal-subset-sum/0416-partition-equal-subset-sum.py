@@ -3,27 +3,23 @@ class Solution:
         # two subsets
         # sum is equal => True // not equal => False
         
-        Sum = sum(nums)
-       
-    
-        if Sum % 2 != 0:
-            return False 
-
-        dp = set()
-        dp.add(0)
-        target = Sum // 2  
-
-        for i in range(len(nums)):
-            nextDP = set()
-
-            for t in dp:
-                nextDP.add(t+nums[i])
-                nextDP.add(t)
-
-            dp = nextDP
-
-        if target in dp:
-            return True
-        else:
+        if sum(nums) % 2 != 0:
             return False
+        
+        dp = set()
+        
+
+        def dfs(idx, current_sum):
+            if current_sum == sum(nums)//2:
+                return True
+            if idx == len(nums) - 1 :
+                return False
             
+            if (idx, current_sum) in dp:
+                return False
+
+            dp.add((idx, current_sum))
+            return dfs(idx+1, current_sum) or dfs(idx+1, current_sum + nums[idx])
+        
+        return dfs(0, 0)
+
