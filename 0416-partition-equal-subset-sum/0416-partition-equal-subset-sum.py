@@ -4,24 +4,26 @@ class Solution:
         # sum is equal => True // not equal => False
         
         Sum = sum(nums)
-        
-        visited = set()
-
+       
+    
         if Sum % 2 != 0:
             return False 
 
-        def dfs(index, current_sum):
-            if current_sum == Sum//2:
-                return True
+        dp = set()
+        dp.add(0)
+        target = Sum // 2  
 
-            if index == len(nums) -1:
-                return False
+        for i in range(len(nums)):
+            nextDP = set()
 
-            if (index, current_sum) in visited:
-                return False
+            for t in dp:
+                nextDP.add(t+nums[i])
+                nextDP.add(t)
 
-            visited.add((index, current_sum))
-        
-            return dfs(index+1, current_sum + nums[index]) or dfs(index+1, current_sum)
+            dp = nextDP
 
-        return dfs(0, 0)
+        if target in dp:
+            return True
+        else:
+            return False
+            
