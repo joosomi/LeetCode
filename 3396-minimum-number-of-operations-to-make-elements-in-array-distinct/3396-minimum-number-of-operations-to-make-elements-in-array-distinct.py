@@ -8,8 +8,7 @@ class Solution:
 
         while len(set(nums)) != len(nums):
             if len(nums) >= 3:
-                new_nums = nums[3:]
-                nums = new_nums
+                nums = nums[3:]
             else: 
                 nums = []
     
