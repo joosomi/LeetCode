@@ -1,3 +1,5 @@
+from itertools import combinations
+
 class Solution:
     def countGoodTriplets(self, arr: List[int], a: int, b: int, c: int) -> int:
         # good triplets (arr[i], arr[j], arr[k])
@@ -10,11 +12,8 @@ class Solution:
         
         cnt = 0
 
-        for i in range(len(arr)):
-            for j in range(i+1, len(arr)):
-                for k in range(j+1, len(arr)):
-
-                    if abs(arr[i] - arr[j]) <= a and abs(arr[j] - arr[k]) <= b and abs(arr[k]- arr[i]) <= c:
-                        cnt+=1
+        for i, j, k in combinations(range(len(arr)), 3):
+            if abs(arr[i]-arr[j]) <= a and abs(arr[j]-arr[k]) <= b and abs(arr[k]- arr[i]) <= c:
+                cnt +=1 
 
         return cnt 
