@@ -6,12 +6,13 @@ class Solution:
         ans = 0
         zero = 0
         
-        print(cnt)
         for key, val in cnt.items():
+            group_size = key + 1 
             if key > 0:
-                ans += ceil(val / (key + 1)) * (key + 1)
+                ans += ceil(val/group_size) * group_size
             elif key == 0:
                 ans += val 
                 
         
         return ans 
+
