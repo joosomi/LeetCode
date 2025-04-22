@@ -1,19 +1,12 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-       
-       # 시간을 줄이기 위해 -> 해쉬맵(딕셔너리)를 사용한다! 
-        ans = {}
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        h = {}
 
-        for idx, val in enumerate(nums):
-            remained_value = target - val
-            if remained_value in ans:
-                return [ans[remained_value], idx]
+        for i in range(len(nums)):
+            num = target - nums[i]
+
+            if num in h:
+                return [i, h[num]]
             
-            ans[val] = idx
-            
-            
+            h[nums[i]] = i
+        
