@@ -17,12 +17,7 @@ class Solution:
         
         max_val = max(g_size.values())
         
-        ans = 0
-        for values in g_size.values():
-            if max_val == values:
-                ans +=1
-
+        ans = list(g_size.values()).count(max_val)
         return ans 
-        
         
 
