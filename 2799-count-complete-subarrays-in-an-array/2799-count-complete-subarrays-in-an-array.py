@@ -11,19 +11,12 @@ class Solution:
         ans = 0
         total_distinct = len(set(nums))
         
-        
         for left in range(n):
-            cnt = defaultdict(int)
-            distinct = 0
-            
+            seen = set()
             for right in range(left, n):
-                if cnt[nums[right]] == 0:
-                    distinct +=1
-                cnt[nums[right]] += 1
+                seen.add(nums[right])
 
-                if distinct == total_distinct:
-                    ans +=1 
-                elif distinct > total_distinct:
+                if len(seen) == total_distinct:
+                    ans += n - right 
                     break
-
         return ans 
