@@ -6,8 +6,7 @@ class Solution:
         # k = 서로 다른 원소의 개수
         # 구해야 하는 것: k개의 서로 다른 원소를 포함한 subarray의 개수
         # 입력값이 찾아서 브루트포스도 가능
-
-        left, right = 0, 1
+        
         ans = 0
         k = len(set(nums))
 
