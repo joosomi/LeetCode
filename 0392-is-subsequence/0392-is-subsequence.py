@@ -1,13 +1,12 @@
-class Solution(object):
-    def isSubsequence(self, s, t):
-        """
-        :type s: str
-        :type t: str
-        :rtype: bool
-        """
-        # iter()를 사용하여 t의 문자들을 순차적으로 확인
-        t_iter = iter(t)
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
         
-        # s의 각 문자가 t_iter에서 순차적으로 나타나는지 확인
-        return all(i in t_iter for i in s)
-        
+        left, right = 0, 0
+
+        while left < len(s) and right < len(t):
+            if s[left] == t[right]:
+                left += 1
+            right +=1
+
+        return left == len(s)
+            
