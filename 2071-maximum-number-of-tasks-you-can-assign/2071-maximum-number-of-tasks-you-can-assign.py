@@ -1,4 +1,5 @@
-from collections import deque 
+import heapq
+from collections import deque
 
 class Solution:
     def maxTaskAssign(self, tasks: List[int], workers: List[int], pills: int, strength: int) -> int:
@@ -28,27 +29,25 @@ class Solution:
             selected_workers = workers[-k:]
             pills_left = pills
             available = deque(selected_workers)
+            min_diff = 0
 
             for task in selected_tasks:
                 # 가장 강한 worker가 할 수있는지
                 if available and available[-1] >= task:
                     available.pop()
                 elif available and pills_left > 0:
-                    # 가장 약한 worker에게 약 투여 
-                    if available[0] + strength >= task:
-                        available.popleft()
-                        pills_left -= 1
-                    elif available[-1] + strength >= task:
-                        available.pop()
-                        pills_left -=1 
-
-                    else:
+                    found = False 
+                    for i in range(len(available)):
+                        if available[i] + strength >= task:
+                            available.remove(available[i])
+                            pills_left -=1 
+                            found = True
+                            break
+                    if not found:
                         return False
                 else:
                     return False
             return True 
-
-
 
 
 
