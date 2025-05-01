@@ -1,4 +1,5 @@
 from bisect import bisect_left
+from collections import deque
 
 class Solution:
     def maxTaskAssign(self, tasks: List[int], workers: List[int], pills: int, strength: int) -> int:
@@ -18,34 +19,33 @@ class Solution:
         high = min(len(tasks), len(workers)) 
 
         tasks.sort()
-        workers.sort()
-
+        workers.sort(reverse = True)
+        n = len(tasks)
         ans = 0
 
         # 작업 k개를 작업자들에게 (pills개까지 써서) 배정할 수 있는지 확인
-        def can_assign(k):
-            selected_tasks = tasks[:k][::-1]
-            selected_workers = workers[-k:] # 가장 강한 workers들 순서로 
-            pills_left = pills
-            available = selected_workers
-            min_diff = 0
+        def can_assign(k, pills_left):
+            task_idx = 0
+            task_temp = deque()
 
-            for task in selected_tasks:
-                # 가장 강한 worker가 할 수있는지
-                if available and available[-1] >= task:
-                    available.pop()
-                elif available and pills_left > 0:
-                    idx = bisect_left(available, task - strength) # task - strength 이상의 가장 왼쪽 인덱스를 알려줌
-                    
-                    if idx == len(available): # 모든 사람에게 약을 먹여도 task를 못하는 경우 
-                        return False
+            # 가장 강한 k명의 작업자들을 순회 
+            for i in range(k-1, -1, -1):
+                while task_idx < k and tasks[task_idx] <= workers[i] + strength:
+                    task_temp.append(tasks[task_idx])
+                    task_idx +=1 
 
-                    available.pop(idx)
-                    pills_left -=1 
-                
+                if len(task_temp) == 0:
+                    return False
+
+                if workers[i] >= task_temp[0]: # 약 안써도 가능한 작업인 경우 
+                    task_temp.popleft()
+
+                elif pills_left > 0:
+                    task_temp.pop() # 가장 어려운 작업을 약 먹고 수행 
+                    pills_left -=1
                 else:
                     return False
-            return True 
+            return True
 
 
 
@@ -54,7 +54,7 @@ class Solution:
 
             # mid 개의 작업을 할당 할 수 있는 경우 
                 # 더 많이 할 수 있는지 오른쪽 탐색 
-            if can_assign(mid):
+            if can_assign(mid, pills):
                 ans = mid
                 low = mid + 1 
         
