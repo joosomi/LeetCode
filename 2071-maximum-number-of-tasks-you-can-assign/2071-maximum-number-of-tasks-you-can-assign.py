@@ -1,5 +1,4 @@
-import heapq
-from collections import deque
+from bisect import bisect_left
 
 class Solution:
     def maxTaskAssign(self, tasks: List[int], workers: List[int], pills: int, strength: int) -> int:
@@ -26,9 +25,9 @@ class Solution:
         # 작업 k개를 작업자들에게 (pills개까지 써서) 배정할 수 있는지 확인
         def can_assign(k):
             selected_tasks = tasks[:k][::-1]
-            selected_workers = workers[-k:]
+            selected_workers = workers[-k:] # 가장 강한 workers들 순서로 
             pills_left = pills
-            available = deque(selected_workers)
+            available = selected_workers
             min_diff = 0
 
             for task in selected_tasks:
@@ -36,15 +35,14 @@ class Solution:
                 if available and available[-1] >= task:
                     available.pop()
                 elif available and pills_left > 0:
-                    found = False 
-                    for i in range(len(available)):
-                        if available[i] + strength >= task:
-                            available.remove(available[i])
-                            pills_left -=1 
-                            found = True
-                            break
-                    if not found:
+                    idx = bisect_left(available, task - strength) # task - strength 이상의 가장 왼쪽 인덱스를 알려줌
+                    
+                    if idx == len(available): # 모든 사람에게 약을 먹여도 task를 못하는 경우 
                         return False
+
+                    available.pop(idx)
+                    pills_left -=1 
+                
                 else:
                     return False
             return True 
