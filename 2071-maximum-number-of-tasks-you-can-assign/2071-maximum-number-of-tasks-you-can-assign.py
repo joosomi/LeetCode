@@ -1,4 +1,4 @@
-from bisect import bisect_left
+
 from collections import deque
 
 class Solution:
@@ -19,30 +19,33 @@ class Solution:
         high = min(len(tasks), len(workers)) 
 
         tasks.sort()
-        workers.sort(reverse = True)
-        n = len(tasks)
+        workers.sort()
+    
         ans = 0
 
+
         # 작업 k개를 작업자들에게 (pills개까지 써서) 배정할 수 있는지 확인
-        def can_assign(k, pills_left):
-            task_idx = 0
-            task_temp = deque()
-
-            # 가장 강한 k명의 작업자들을 순회 
-            for i in range(k-1, -1, -1):
-                while task_idx < k and tasks[task_idx] <= workers[i] + strength:
-                    task_temp.append(tasks[task_idx])
-                    task_idx +=1 
-
-                if len(task_temp) == 0:
+        def can_assign(k):
+            queue = deque()
+            i = 0
+            n = len(workers)
+            pills_left = pills
+           
+            for w in workers[n-k:]:
+                
+                while i < k and tasks[i] <= w + strength:
+                    queue.append(tasks[i])
+                    i += 1
+                if not queue:
                     return False
 
-                if workers[i] >= task_temp[0]: # 약 안써도 가능한 작업인 경우 
-                    task_temp.popleft()
-
+                # 2) no-pill: 가장 쉬운 일 처리
+                if queue[0] <= w:
+                    queue.popleft()
+                # 3) pill: 가장 어려운 일 처리
                 elif pills_left > 0:
-                    task_temp.pop() # 가장 어려운 작업을 약 먹고 수행 
-                    pills_left -=1
+                    pills_left -= 1
+                    queue.pop()
                 else:
                     return False
             return True
@@ -54,7 +57,7 @@ class Solution:
 
             # mid 개의 작업을 할당 할 수 있는 경우 
                 # 더 많이 할 수 있는지 오른쪽 탐색 
-            if can_assign(mid, pills):
+            if can_assign(mid):
                 ans = mid
                 low = mid + 1 
         
