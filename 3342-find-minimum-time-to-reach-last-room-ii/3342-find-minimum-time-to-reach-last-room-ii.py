@@ -21,6 +21,8 @@ class Solution:
             if x == n -1 and y == m-1:
                 return moves
             
+            if moves > visited[x][y][next_one]:
+                continue
             
             dx = [0, 0, -1, 1]
             dy = [-1, 1, 0, 0]
