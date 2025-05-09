@@ -8,36 +8,44 @@ class Solution:
 
         MOD = 10**9 + 7
         
-        total_sum = sum(map(int, num))
+        n = len(num)
+        cnt = Counter(int(ch) for ch in num)
+        total_sum = sum(int(ch) for ch in num)
 
-        # 전체 합이 홀수면 절대 balanced 문자열이 될 수 없다. 
         if total_sum % 2 != 0:
             return 0
 
-        target_sum = total_sum // 2 # 목표 짝수 인덱스의 합 
-        half_len = len(num) % 2 + len(num) // 2 # 짝수 index의 개수 
-        
-        cnt = Counter(num)
+        half_sum = total_sum // 2
+        odd = n // 2 
+        even = n - odd
 
-        dp = [[0]*(half_len+1) for _ in range(target_sum+1)]
-        dp[0][0] = 1 
-        
- 
+        # balance = 짝수 인덱스 합 - 홀수 인덱스 합  => target = 0
 
-        for digit in list(num):
-            d = int(digit)
-            for s in range(target_sum, d -1 , -1):
-                for k in range(half_len, 0, -1):
-                    dp[s][k] += dp[s-d][k-1]
+        @cache
+        def dfs(digit, odd_left, even_left, balance):
+            # 종료 조건
+            if digit < 0:
+                return int(odd_left == 0 and even_left == 0 and balance == 0)
 
-        ans = dp[target_sum][half_len] # 짝수 인덱스 조합의 수 
+            ans = 0
 
-        ans *= math.factorial(half_len) * math.factorial(len(num) - half_len)  
+            # 해당 digit이 나온 횟수 -> 홀수/짝수 index에 몇개를 넣을 것인지 
+            for take_from_odd in range(cnt[digit] + 1):
+                take_from_even = cnt[digit] - take_from_odd 
 
-        for v in cnt.values():
-            ans //= math.factorial(v)
+                if take_from_odd > odd_left or take_from_even > even_left:
+                    continue
 
-        return ans % MOD 
+                # 조합할 수 있는 경우의 수 
+                ways = comb(odd_left, take_from_odd) * comb(even_left, take_from_even) 
+                new_balance = balance - digit * (take_from_even - take_from_odd)
+
+                ans += ways * dfs(digit-1, odd_left - take_from_odd, even_left - take_from_even, new_balance)
+                ans %= MOD
+
+            
+            return ans 
 
 
-       
+        return dfs(9, odd, even, 0)
+
