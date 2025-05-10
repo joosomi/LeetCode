@@ -3,10 +3,9 @@ class Solution:
         cnt1 = nums1.count(0)
         cnt2 = nums2.count(0)
 
-        n1 = [1 if i == 0 else i for i in nums1 ]
-        n2 = [1 if i == 0 else i for i in nums2 ]
 
-        sum1, sum2 = sum(n1), sum(n2)
+        sum1 = sum(1 if x == 0 else x for x in nums1)
+        sum2 = sum(1 if x == 0 else x for x in nums2)
 
         if sum1 == sum2:
             return sum1
